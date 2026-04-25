@@ -1,34 +1,34 @@
+flag=true
+
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('build') {
             steps {
-                echo 'Building..'
-                // Here you can define commands for your build
+                echo 'Building Project'
             }
         }
-        stage('Test') {
+        stage('test') {
             steps {
-                echo 'Testing..'
-                // Here you can define commands for your tests
+                when {
+                    expression {
+                        flag == false
+                    }
+                }
+                echo 'Testing Project'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                // Here you can define commands for your deployment
             }
         }
     }
     post {
-        // the conditions here will execute after the build is done
-
         always {
-            //this action will happen always regardless of the result of build
             echo 'Post build condition running'
         }
         failure {
-            //this action will happen only if the build has failed
             echo 'Post Action if Build Failed'
         }
     }
